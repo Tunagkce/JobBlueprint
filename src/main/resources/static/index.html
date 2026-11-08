@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f2">
+  <title>Your profile · JobTracker</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="JobTracker home">
+        <span class="brand-mark" aria-hidden="true">J</span>
+        <span>jobtracker</span>
+      </a>
+      <div class="topbar-actions">
+        <span class="local-badge"><span class="local-dot"></span> Private · on this computer</span>
+        <form class="logout-form" method="post" action="/logout">
+          <input class="csrf-field" type="hidden" name="_csrf">
+          <button class="text-button" type="submit">Sign out</button>
+        </form>
+      </div>
+    </header>
+
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">YOUR APPLICATION TOOLKIT <span>01 / 03</span></p>
+      <h1 id="page-title">Your profile.</h1>
+      <p class="intro-copy">Your saved details stay on this computer. Review them here and update them whenever you need.</p>
+    </section>
+
+    <div class="content-grid">
+      <aside class="side-note">
+        <div class="step-icon" aria-hidden="true">01</div>
+        <h2>Profile details</h2>
+        <p>This is your source of truth. JobTracker will use these details to help fill application forms.</p>
+        <div class="note-rule"></div>
+        <p class="small-note"><span aria-hidden="true">↳</span> You choose what to include. Leave anything blank that you don’t want to save.</p>
+      </aside>
+
+      <section class="form-card" aria-labelledby="details-heading">
+        <div id="profile-view" hidden>
+          <div class="card-heading">
+            <div>
+              <p class="section-kicker">SAVED PROFILE</p>
+              <h2 id="profile-name">Your details</h2>
+            </div>
+            <button id="edit-profile" class="secondary-button" type="button">Edit profile</button>
+          </div>
+          <dl id="profile-details" class="profile-details"></dl>
+          <p id="profile-summary" class="profile-summary" hidden></p>
+          <p id="view-status" class="save-status" role="status" aria-live="polite"></p>
+        </div>
+
+        <div id="profile-editor" hidden>
+        <div class="card-heading">
+          <div>
+            <p class="section-kicker">PROFILE DETAILS</p>
+            <h2 id="details-heading">The essentials</h2>
+          </div>
+          <span class="optional-label">All fields optional</span>
+        </div>
+
+        <form id="profile-form">
+          <div class="field-grid">
+            <label class="field field-wide">
+              <span>Full name</span>
+              <input name="fullName" autocomplete="name" placeholder="e.g. Alex Morgan">
+            </label>
+            <label class="field">
+              <span>Email address</span>
+              <input name="email" type="email" autocomplete="email" placeholder="alex@example.com">
+            </label>
+            <div class="field field-wide">
+              <label for="phone">Phone number</label>
+              <div class="phone-row">
+                <div class="combo-wrap" id="phone-country-combo">
+                  <input id="phone-country" type="search" role="combobox" aria-label="Telephone country code" aria-autocomplete="list" aria-haspopup="listbox" aria-controls="phone-country-options" aria-expanded="false" autocomplete="off" placeholder="Search code or country">
+                  <div id="phone-country-options" class="combo-list" role="listbox" hidden></div>
+                </div>
+                <input id="phone-country-iso" name="phoneCountryIso" type="hidden">
+                <input id="phone-country-code" name="phoneCountryCode" type="hidden">
+                <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="Choose a country code first" disabled>
+              </div>
+              <span class="field-hint" id="phone-format">Select a country code to see its number format.</span>
+            </div>
+            <div class="field">
+              <label for="country">Country</label>
+              <div class="combo-wrap" id="country-combo">
+                <input id="country" type="search" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-controls="country-options" aria-expanded="false" autocomplete="off" placeholder="Search countries">
+                <div id="country-options" class="combo-list" role="listbox" hidden></div>
+              </div>
+              <input id="country-value" name="country" type="hidden">
+            </div>
+            <div class="field">
+              <label for="city-choice">City</label>
+              <div class="combo-wrap" id="city-combo">
+                <input id="city-choice" type="search" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-controls="city-options" aria-expanded="false" autocomplete="off" placeholder="Choose a country first" disabled>
+                <div id="city-options" class="combo-list" role="listbox" hidden></div>
+              </div>
+              <input id="city" name="city" type="hidden">
+              <span class="field-hint" id="city-hint">Choose a country to see its city list.</span>
+            </div>
+            <label class="field field-wide">
+              <span>LinkedIn profile <em>optional</em></span>
+              <input name="linkedInUrl" type="url" autocomplete="url" placeholder="https://linkedin.com/in/your-name">
+            </label>
+            <label class="field field-wide">
+              <span>Portfolio or personal website <em>optional</em></span>
+              <input name="portfolioUrl" type="url" placeholder="https://your-portfolio.com">
+            </label>
+            <label class="field field-wide">
+              <span>Professional summary <em>optional</em></span>
+              <textarea name="professionalSummary" rows="5" maxlength="5000" placeholder="A few sentences about your experience, strengths, and the work you’re looking for."></textarea>
+              <span class="field-hint">Keep it factual. You can tailor this for each role later.</span>
+            </label>
+          </div>
+
+          <div class="form-footer">
+            <p id="save-status" class="save-status" role="status" aria-live="polite">Your details are saved only when you select Save profile.</p>
+            <div class="editor-actions">
+              <button id="cancel-edit" class="secondary-button" type="button" hidden>Cancel</button>
+              <button id="save-button" type="submit"><span>Save profile</span><span aria-hidden="true">↗</span></button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </section>
+    </div>
+
+    <footer class="page-footer">
+      <span>JOBTRACKER <span class="footer-separator">/</span> PROFILE</span>
+      <span>Built for your next move.</span>
+    </footer>
+  </main>
+</body>
+</html>

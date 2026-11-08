@@ -1,0 +1,13 @@
+.git
+.m2
+.tmp
+.target
+target/
+.maven/
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+*.iml
+client_secret*.json
