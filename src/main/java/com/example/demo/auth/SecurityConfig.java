@@ -125,11 +125,11 @@ public class SecurityConfig {
 				.loginPage("/auth.html")
 				.loginProcessingUrl("/login")
 				.usernameParameter("email")
-				.defaultSuccessUrl("/myprofile", true)
+				.defaultSuccessUrl(com.example.demo.HomeController.APP_HOME, true)
 				.failureUrl("/auth.html?error=login"))
 			.logout(logout -> logout.logoutSuccessUrl("/auth.html?logout"));
 		if (registrations.getIfAvailable() != null) {
-			http.oauth2Login(oauth -> oauth.loginPage("/auth.html").defaultSuccessUrl("/myprofile", true)
+			http.oauth2Login(oauth -> oauth.loginPage("/auth.html").defaultSuccessUrl(com.example.demo.HomeController.APP_HOME, true)
 					.failureHandler((request, response, exception) -> {
 						// Log the provider's reason (e.g. invalid_id_token) without tokens or codes.
 						log.warn("OAuth sign-in failed: {}", exception.getMessage());

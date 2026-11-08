@@ -1,0 +1,85 @@
+/* Additions for the React profile app. Base tokens and shared components live in base.css. */
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+a { color: var(--green); }
+select { font: inherit; }
+
+/* Section navigation */
+.profile-nav { position: sticky; top: 24px; }
+.progress { margin-bottom: 22px; }
+.progress-label { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.progress-label strong { color: var(--ink); font-size: 13px; }
+.progress-track { height: 6px; border-radius: 99px; background: #e4ebe5; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: inherit; background: var(--green); transition: width .3s ease; }
+.section-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.section-links a { display: flex; align-items: center; gap: 10px; padding: 8px 8px; margin: 0 -8px; border-radius: 7px; color: #34413c; text-decoration: none; font-size: 13px; }
+.section-links a:hover { background: #ebf0eb; }
+.section-dot { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #c9d3cc; font-size: 10px; color: #fff; flex: 0 0 18px; }
+.section-dot.done { background: var(--green); border-color: var(--green); }
+
+/* Section cards */
+.section-stack { display: grid; gap: 22px; }
+.section-card { scroll-margin-top: 20px; }
+.section-intro { margin: -8px 0 20px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.empty-state { margin: 0; padding: 18px; border: 1px dashed #d8e0da; border-radius: 9px; color: #7c8781; font-size: 12px; line-height: 1.6; text-align: center; }
+.secondary-button { min-width: auto; white-space: nowrap; }
+
+/* Saved items (experience, education) */
+.item-list { list-style: none; margin: 0; padding: 0; }
+.item { display: flex; justify-content: space-between; gap: 18px; padding: 18px 0; border-bottom: 1px solid #edf0ec; }
+.item:first-child { padding-top: 0; }
+.item:last-child { border-bottom: 0; padding-bottom: 0; }
+.item.editing { display: block; }
+.item-main { min-width: 0; }
+.item-main h3 { margin: 0 0 4px; font-size: 15px; letter-spacing: -.02em; }
+.item-sub { margin: 0 0 4px; color: #34413c; font-size: 12px; }
+.item-meta { display: flex; align-items: center; gap: 8px; margin: 0; color: #7c8781; font-size: 11px; }
+.item-text { margin: 10px 0 0; color: #53635d; font-size: 12px; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere; }
+.pill { padding: 2px 8px; border-radius: 99px; background: var(--mint); color: var(--green); font-size: 10px; font-weight: 600; }
+.item-actions { display: flex; gap: 14px; align-items: flex-start; flex: 0 0 auto; }
+.link-button { min-width: 0; height: auto; padding: 2px 0; background: none; color: var(--green); font-size: 11px; font-weight: 600; }
+.link-button:hover { background: none; color: var(--green-dark); text-decoration: underline; transform: none; }
+.link-button.danger { color: #a13f34; }
+.item-form { padding: 20px; margin-bottom: 18px; border: 1px solid #e3e9e4; border-radius: 10px; background: #fafbf9; }
+.item.editing .item-form { margin-bottom: 0; }
+
+/* Skills and languages */
+.inline-form { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto; gap: 12px; align-items: start; }
+.inline-form button[type="submit"] { margin-top: 23px; min-width: 0; }
+.inline-form + .save-status { min-height: 15px; margin: 8px 0 12px; }
+.chip-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; padding: 5px 6px 5px 12px; border: 1px solid #dfe5e0; border-radius: 99px; background: #fff; font-size: 12px; color: #263630; }
+.chip-detail { color: #7c8781; font-size: 10px; }
+.chip-remove { min-width: 0; width: 22px; height: 22px; padding: 0; justify-content: center; border-radius: 50%; background: #f1f4f1; color: #687572; font-size: 14px; line-height: 1; }
+.chip-remove:hover { background: #f6e3e0; color: #a13f34; transform: none; }
+
+/* Fields */
+.field label { display: flex; align-items: baseline; }
+.field-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.field-error { font-size: 10px; color: #a13f34; font-weight: 500; margin-top: -3px; }
+.has-error input, .has-error select, .has-error textarea { border-color: #d39187; }
+.has-error input:focus, .has-error select:focus, .has-error textarea:focus { border-color: #b65a4e; box-shadow: 0 0 0 3px rgba(161, 63, 52, .1); }
+.field input:disabled { color: #929b96; background: #f7f8f6; cursor: not-allowed; }
+.check-field { display: flex; align-items: center; gap: 9px; font-size: 12px; color: #34413c; cursor: pointer; }
+.check-field input { width: 16px; height: 16px; accent-color: var(--green); margin: 0; }
+.field-group { border: 0; padding: 0; margin: 0 0 26px; min-width: 0; }
+.field-group legend { padding: 0; margin-bottom: 14px; font-size: 13px; font-weight: 700; color: var(--ink); }
+
+/* Contact view: rows wrap dt/dd pairs; let them sit directly in the grid. */
+.profile-row { display: contents; }
+
+@media (max-width: 760px) {
+  .profile-nav { position: static; display: block; }
+  .section-links { grid-template-columns: 1fr 1fr; }
+  .field-grid-3 { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+  .inline-form { grid-template-columns: 1fr; }
+  .inline-form button[type="submit"] { margin-top: 0; }
+  .field-grid-3 { grid-template-columns: 1fr; }
+  .item { flex-direction: column; gap: 10px; }
+  .card-heading { flex-wrap: wrap; }
+  .item-form { padding: 14px; }
+  .link-button, .chip-remove, .text-button { width: auto; }
+}

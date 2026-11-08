@@ -6,7 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -132,8 +134,24 @@ class CareerProfileApiTest {
 		// API calls get 401 (not a redirect to the HTML sign-in page) so the frontend can react.
 		mvc.perform(get("/api/career/skills")).andExpect(status().isUnauthorized());
 		mvc.perform(json(post("/api/career/skills"), "{\"name\":\"Java\"}")).andExpect(status().isUnauthorized());
+		mvc.perform(get("/api/me")).andExpect(status().isUnauthorized());
 		// Pages still redirect to sign-in.
-		mvc.perform(get("/myprofile").accept(MediaType.TEXT_HTML)).andExpect(status().is3xxRedirection());
+		mvc.perform(get("/app/").accept(MediaType.TEXT_HTML))
+				.andExpect(status().is3xxRedirection())
+				.andExpect(redirectedUrl("/auth.html"));
+	}
+
+	@Test
+	void signedInUsersAreSentToTheReactApp() throws Exception {
+		mvc.perform(get("/myprofile").with(as(1))).andExpect(redirectedUrl("/app/"));
+		mvc.perform(get("/").with(as(1))).andExpect(redirectedUrl("/app/"));
+		// Client-side routes load the app shell; files are left to the static resource handler.
+		mvc.perform(get("/app/").with(as(1))).andExpect(forwardedUrl("/app/index.html"));
+		mvc.perform(get("/app/jobs").with(as(1))).andExpect(forwardedUrl("/app/index.html"));
+		mvc.perform(get("/api/me").with(as(1)))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.name").value("user1@example.com"))
+				.andExpect(jsonPath("$.provider").value("email"));
 	}
 
 	private static MockHttpServletRequestBuilder json(MockHttpServletRequestBuilder request, String body) {

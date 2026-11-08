@@ -74,7 +74,7 @@ public class AuthController {
 		context.setAuthentication(authentication);
 		SecurityContextHolder.setContext(context);
 		contextRepository.saveContext(context, request, response);
-		return "redirect:/myprofile";
+		return "redirect:" + com.example.demo.HomeController.APP_HOME;
 	}
 
 }

@@ -11,3 +11,5 @@ target/
 .idea/
 *.iml
 client_secret*.json
+frontend/node_modules/
+src/main/resources/static/app/
